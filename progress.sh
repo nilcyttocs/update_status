@@ -10,25 +10,25 @@ status=${line#*@Status.}
 
 case $status in
   "RECEIVING")
-    progress=15
+    progress=10
     ;;
   "VALIDATING")
-    progress=30
+    progress=20
     ;;
   "VALIDATED")
-    progress=45
+    progress=30
     ;;
   "UPDATING")
-    progress=60
+    progress=40
     ;;
   "UPDATED")
-    progress=75
+    progress=70
     ;;
   "POSTPROCESSING")
-    progress=90
+    progress=80
     ;;
   "POSTPROCESSED")
-    progress=100
+    progress=90
     ;;
   *)
     progress=0  # default value if status is not recognized

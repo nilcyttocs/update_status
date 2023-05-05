@@ -15,21 +15,28 @@ const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 export const Landing = (props: any): JSX.Element | null => {
   const [progress, setProgress] = useState<number>(0);
   const [completed, setCompleted] = useState<boolean>(false);
+  const [reboot, setReboot] = useState<boolean>(false);
 
   useEffect(() => {
     const checkProgress = async () => {
       try {
         const response = await requestAPI<any>('progress');
         setProgress(response);
-        if (response === 100) {
-          await sleep(2500);
+        if (response === 90) {
+          await sleep(25000);
+          setProgress(100);
+          await sleep(7000);
           setCompleted(true);
-          await sleep(2500);
+          await sleep(5000);
           window.location.reload();
           return;
         }
       } catch (error) {
         console.error(`Error - GET /progress\n${error}`);
+        setProgress(100);
+        await sleep(7000);
+        setReboot(true);
+        setCompleted(true);
         return;
       }
       timeoutID = window.setTimeout(checkProgress, 500);
@@ -53,9 +60,23 @@ export const Landing = (props: any): JSX.Element | null => {
         }}
       >
         {completed ? (
-          <Typography variant="h4" sx={{ whiteSpace: 'normal' }}>
-            Launching WebDS...
-          </Typography>
+          reboot ? (
+            <>
+              <Typography variant="h4" sx={{ whiteSpace: 'normal' }}>
+                Rebooting DSDK...
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{ marginTop: '16px', whiteSpace: 'normal', color: 'red' }}
+              >
+                Please re-establish ADB connection and port forwarding.
+              </Typography>
+            </>
+          ) : (
+            <Typography variant="h4" sx={{ whiteSpace: 'normal' }}>
+              Launching WebDS...
+            </Typography>
+          )
         ) : (
           <div style={{ padding: '0px 80px' }}>
             <Typography
