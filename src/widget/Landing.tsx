@@ -69,8 +69,8 @@ export const Landing = (props: any): JSX.Element | null => {
                 variant="body1"
                 sx={{ marginTop: '16px', whiteSpace: 'normal', color: 'red' }}
               >
-                Please re-establish ADB connection port forwarding and then
-                reload the webpage.
+                Please re-establish ADB port forwarding and then reload the
+                webpage.
               </Typography>
             </>
           ) : (
