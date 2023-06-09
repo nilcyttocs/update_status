@@ -23,6 +23,12 @@ export const Landing = (props: any): JSX.Element | null => {
         const response = await requestAPI<any>('progress');
         setProgress(response);
         if (response === 90) {
+          try {
+            await sleep(2000);
+            await fetch('http://localhost:80/');
+          } catch (error) {
+            throw error;
+          }
           await sleep(25000);
           setProgress(100);
           await sleep(7000);
